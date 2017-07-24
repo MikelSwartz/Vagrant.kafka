@@ -18,6 +18,7 @@ echo "export PATH=$PATH:/opt/jdk/jdk1.8.0_111/bin" >> ~/.bash_profile
 source ~/.bash_profile
 update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_111/bin/java 100 
 # Zookeeper
+: <<'END'
 if [ -f "/vagrant/zookeeper-3.4.9.tar.gz" ]
  then
   echo "zookeeper-3.4.9.tar.gz exists"
@@ -29,7 +30,8 @@ tar -zxf /vagrant/zookeeper-3.4.9.tar.gz -C /opt/
 cd /opt/zookeeper-3.4.9/
 mkdir -p /opt/zookeeper-3.4.9/data
 cp /vagrant/zoo.cfg /opt/zookeeper-3.4.9/conf/
-bin/zkServer.sh start &
+#bin/zkServer.sh start &
+END
 if [ -f /vagrant/scala-2.11.8.rpm ]
     then
      echo "scala-2.11.8.rpm exists"
