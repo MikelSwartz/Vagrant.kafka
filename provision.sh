@@ -1,6 +1,6 @@
 #!/bin/bash
 yum update
-yum install -y vim
+yum install -y vim screen
 # Java install and configure
 if [ -f "/vagrant/jdk-8u111-linux-x64.tar.gz" ]
  then
