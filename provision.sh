@@ -17,39 +17,29 @@ echo "export JAVA_HOME=/opt/jdk/jdk1.8.0_111" >> ~/.bash_profile
 echo "export PATH=$PATH:/opt/jdk/jdk1.8.0_111/bin" >> ~/.bash_profile
 source ~/.bash_profile
 update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_111/bin/java 100 
-# Zookeeper
-: <<'END'
-if [ -f "/vagrant/zookeeper-3.4.9.tar.gz" ]
- then
-  echo "zookeeper-3.4.9.tar.gz exists"
- else
-  cd /vagrant/
-  wget http://apache.claz.org/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz
-fi
-tar -zxf /vagrant/zookeeper-3.4.9.tar.gz -C /opt/
-cd /opt/zookeeper-3.4.9/
-mkdir -p /opt/zookeeper-3.4.9/data
-cp /vagrant/zoo.cfg /opt/zookeeper-3.4.9/conf/
-#bin/zkServer.sh start &
-END
-if [ -f /vagrant/scala-2.11.8.rpm ]
+
+#scala
+SCALA_VER="2.11.11"
+if [ -f /vagrant/scala-${SCALA_VER}.rpm ]
     then
-     echo "scala-2.11.8.rpm exists"
+     echo "scala-${SCALA_VER}.rpm exists"
     else
      cd /vagrant
-     wget http://downloads.lightbend.com/scala/2.11.8/scala-2.11.8.rpm
+     wget https://downloads.lightbend.com/scala/${SCALA_VER}/scala-${SCALA_VER}.rpm
+
 fi
 cd /vagrant/
-yum install /vagrant/scala-2.11.8.rpm -y
-#    /bin/zkCli.sh #To start CLI
+yum install /vagrant/scala-2.11.11.rpm -y
+
 # Kafka
-if [ -f "/vagrant/kafka_2.11-0.9.0.0.tgz" ]
+KAFKA_VER="0.11.0.0"
+if [ -f "/vagrant/kafka_2.11-${KAFKA_VER}.tgz" ]
  then
-  echo "kafka_2.11-0.9.0.0.tgz exists"
+  echo "kafka_2.11-${KAFKA_VER}.tgz exists"
  else
   cd /vagrant/
-  wget http://mirror.olnevhost.net/pub/apache/kafka/0.9.0.0/kafka_2.11-0.9.0.0.tgz
+  wget http://apache.claz.org/kafka/${KAFKA_VER}/kafka_2.11-${KAFKA_VER}.tgz
 fi
-tar -zxf /vagrant/kafka_2.11-0.9.0.0.tgz -C /opt
-cd /opt/kafka_2.11-0.9.0.0
+tar -zxf /vagrant/kafka_2.11-${KAFKA_VER}.tgz -C /opt
+cd /opt/kafka_2.11-${KAFKA_VER}
 bin/kafka-server-start.sh config/server.properties &
